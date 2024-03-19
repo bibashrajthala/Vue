@@ -11,27 +11,48 @@
   <!-- PROP TYPES AND VALIDATIONS  -->
   <!-- make age and isPublished dynamic props to make it accept other values, otherwise it takes that as string -->
   <!-- for non prop (pre existing) attributes like id, style, class, type, placeholder, etc , by defualt it gets set to root element of component, if it dont have single root component, it dont gets applied to any component, but this can be changed using inheritAttrs=true or false to say if root component should use it, and binding $attrs to element to want to set attributes  -->
-  <Article  title="Article Title" :age="20" :isPublished="true" id="my-article" />
+  <Article
+    title="Article Title"
+    :age="20"
+    :isPublished="true"
+    id="my-article"
+  />
 
+  <!-- COMPONENT EVENTS / EMIT  -->
+  <button @click="showPopUp = true">Open Popup</button>
 
+  <PopUp v-show="showPopUp" @close="closePopUp" />
 
+  <!-- V-MODEL IN CUSTOM COMPONENTS  -->
+  <Input v-model="name" placeholder="Enter name" />
 </template>
 
 <script>
 import Greet from "./components/Greet.vue";
 import Article from "./components/Article.vue";
+import PopUp from "./components/PopUp.vue";
+import Input from "./components/Input.vue";
 
 export default {
   name: "App",
   components: {
     Greet,
     Article,
+    PopUp,
+    Input,
   },
   data() {
     return {
       name: "Bibash",
       heroName: "Bish",
+      showPopUp: false,
     };
+  },
+  methods: {
+    closePopUp(name) {
+      console.log("data", name);
+      this.showPopUp = false;
+    },
   },
 };
 </script>
