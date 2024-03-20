@@ -25,6 +25,27 @@
 
   <!-- V-MODEL IN CUSTOM COMPONENTS  -->
   <Input v-model="name" placeholder="Enter name" />
+
+  <!-- SLOT PROPS => pass data from child to parent  -->
+  <NameList v-slot:default="slotProps">{{ slotProps.firstName }}</NameList>
+  <NameList v-slot:default="slotProps"
+    >{{ slotProps.firstName }} {{ slotProps.lastName }}</NameList
+  >
+  <NameList>
+    <template v-slot:slotWithFullName="slotProps">
+      {{ slotProps.fullname.lastName }}
+    </template>
+  </NameList>
+
+  <!-- COMPONENT STYLES  -->
+  <!-- just like in react, styles are applied globally and since styles of child component are evalueated before parents, parent child overrides child styles on confilct. so use scope the styles or even better use module styles -->
+  <!-- Also when root node is not provided inside template of child, it takes parent styles even when child styles are scoped
+   -->
+  <!-- And slots takes styles from parent component not form child  -->
+  <h4>From parent</h4>
+  <ChildStyles>
+    <h4>From Slot</h4>
+  </ChildStyles>
 </template>
 
 <script>
@@ -32,6 +53,8 @@ import Greet from "./components/Greet.vue";
 import Article from "./components/Article.vue";
 import PopUp from "./components/PopUp.vue";
 import Input from "./components/Input.vue";
+import NameList from "./components/NameList.vue";
+import ChildStyles from "./components/ChildStyles.vue";
 
 export default {
   name: "App",
@@ -40,6 +63,8 @@ export default {
     Article,
     PopUp,
     Input,
+    NameList,
+    ChildStyles,
   },
   data() {
     return {
@@ -57,4 +82,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+h4 {
+  color: red;
+}
+</style>
