@@ -68,6 +68,15 @@
   <keep-alive>
     <component :is="activeTab" />
   </keep-alive>
+
+  <!-- TELEPORT  -->
+  <!-- can teleport => define element or component in one place and display it in another even outside of vue root element #app of index.html of public folder  -->
+  <!-- give element inside which you want it to teleport to , can use any css selector , id is the best one  -->
+  <!-- even though its teleported it still propagates event to ancestors jus like normal vue dom elements => event bubbling/ evnt propagation -->
+  <!-- usually use to create modal , drawer, tooltip etc -->
+  <teleport to="#portal-root">
+    <div>This component is teleported</div>
+  </teleport>
 </template>
 
 <script>
