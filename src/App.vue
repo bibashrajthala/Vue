@@ -46,6 +46,28 @@
   <ChildStyles>
     <h4>From Slot</h4>
   </ChildStyles>
+
+  <!-- DYNAMIC COMPONENTS  -->
+
+  <button @click="activeTab = 'TabA'">Tab A</button>
+  <button @click="activeTab = 'TabB'">Tab B</button>
+  <button @click="activeTab = 'TabC'">Tab C</button>
+
+  <!-- NOT RECOMMENDED : conventional method  -->
+  <TabA v-if="activeTab === 'TabA'" />
+  <TabB v-if="activeTab === 'TabB'" />
+  <TabC v-if="activeTab === 'TabC'" />
+
+  <!-- RECOMMENDED => use dynamic components  -->
+  <!-- provide component name (given while importing) to is attribute using v-bind  -->
+  <!-- in this case make sure component name is same as activeTab value  -->
+  <component :is="activeTab" />
+
+  <!-- caching the dynamic component -->
+  <!-- dont create new instance of active component and dont rerender it  -->
+  <keep-alive>
+    <component :is="activeTab" />
+  </keep-alive>
 </template>
 
 <script>
@@ -56,6 +78,10 @@ import Input from "./components/Input.vue";
 import NameList from "./components/NameList.vue";
 import ChildStyles from "./components/ChildStyles.vue";
 
+import TabA from "./components/tabs/TabA.vue";
+import TabB from "./components/tabs/TabB.vue";
+import TabC from "./components/tabs/TabC.vue";
+
 export default {
   name: "App",
   components: {
@@ -65,12 +91,16 @@ export default {
     Input,
     NameList,
     ChildStyles,
+    TabA,
+    TabB,
+    TabC,
   },
   data() {
     return {
       name: "Bibash",
       heroName: "Bish",
       showPopUp: false,
+      activeTab: "TabA",
     };
   },
   methods: {
