@@ -1,34 +1,41 @@
 <template>
-  <!-- TEMPLATE REFS => just like refs of react js provided by useRef() -->
-  <!-- when used in element provided reference to instance of that element but when
-  used in component, gives reference to instance of that component(data,
-  methods,etc) -->
-  <div>
-    <input type="text" ref="inputRef" />
-    <PostList ref="postListRef" />
-  </div>
+  <!-- COMPOSITION API
+    -> makes code/logics encapsulated a/c to feature 
+    eg: in options api, one file can have (data(for feature 1 and 2), methoods(for feature 1 and 2), computed(for feature 1 and 2), lifecycle methods(for feature 1 and 2),watchers(for feature 1 and 2) ) etc for feature 1 and 2 , while in composition api we can compose code/logics separately for feature 1 and feature 2 and so on.
+    -> increases reusesability  -->
+  <div>Composition api</div>
 
-  <!-- Mixins  -->
-  <ClickCounter />
-  <HoverCounter />
+  <!-- COMPOSITION API VS OPTIONS API  -->
+  <!-- ref vs data  -->
+  <div>
+    <!-- no need to use .value  for binding in template as vue does that for us , but in js part we need to use .value to react/mutate/access the value  -->
+    <h3>{{ c_firstName }}</h3>
+    <h3>{{ c_lastName }}</h3>
+    <h3>{{ greet_julia }}</h3>
+
+    <h3>{{ o_firstName }}</h3>
+  </div>
 </template>
 
 <script>
-import PostList from "./components/PostList.vue";
-import ClickCounter from "./components/ClickCounter.vue";
-import HoverCounter from "./components/HoverCounter.vue";
+import { ref } from "vue";
 
 export default {
   name: "App",
-  components: {
-    PostList,
-    ClickCounter,
-    HoverCounter,
+  setup() {
+    const c_firstName = ref("mark");
+    c_firstName.value = "Julia";
+    const greet = `hello ${c_firstName.value}`;
+    return {
+      c_firstName,
+      greet_julia: greet,
+      c_lastName: ref("wayne"),
+    };
   },
-  mounted() {
-    this.$refs.inputRef.focus();
-    console.log("input ref", this.$refs.inputRef);
-    console.log("post list ref", this.$refs.postListRef);
+  data() {
+    return {
+      o_firstName: "Bruce",
+    };
   },
 };
 </script>
